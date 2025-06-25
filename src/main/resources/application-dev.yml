@@ -1,0 +1,9 @@
+logging:
+  level:
+    root: error
+    org:
+      web3j:
+        protocol: info
+    com:
+      betterbank: debug
+

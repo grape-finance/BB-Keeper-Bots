@@ -1,0 +1,17 @@
+#  pulsechain-specific configuration file.
+
+web3j:
+  node:
+    url: wss://rpc-pulsechain.g4mm4.io   # wss://rpc.pulsechain.com
+    chainId: 369
+    pollingInterval: 2000
+    readerKey: "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
+
+logging:
+  level:
+    root: error
+    org:
+      web3j:
+        protocol: info
+    com:
+      betterbank: info
