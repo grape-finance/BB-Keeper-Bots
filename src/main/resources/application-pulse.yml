@@ -5,6 +5,9 @@ web3j:
     url: wss://rpc-pulsechain.g4mm4.io   # wss://rpc.pulsechain.com
     chainId: 369
     pollingInterval: 2000
+    # This has to be a valid key for a valid address for reading.
+    # We use a well-known address from the hardhat test environment.
+    # This is not a secret and can be safely used here.
     readerKey: "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
 
 logging:
