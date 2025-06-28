@@ -1,5 +1,6 @@
 package com.betterbank.bots.service;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +35,7 @@ public class Groundskeeper {
     private final String mintRedeemer;
     private final List<String> treasuries;
     private final BigInteger gasLimit;
+    private final BigInteger bribe;
     Logger logger = LoggerFactory.getLogger(Groundskeeper.class);
 
 
@@ -47,7 +49,8 @@ public class Groundskeeper {
                          @Value("${groundskeeper.treasuries}") List<String> treasuries,
                          @Value("${groundskeeper.executor}") String executor,
                          @Value("${web3j.node.chainId}") long chainId,
-                         @Value("${groundskeeper.gasLimit}") int gasLimit) {
+                         @Value("${groundskeeper.gasLimit}") int gasLimit,
+                         @Value("${groundskeeper.bribe}") int bribe) {
 
         this.credentials = Credentials.create(executor);
         this.dynamicGasProvider = new DynamicGasProvider(web3j);
@@ -60,6 +63,7 @@ public class Groundskeeper {
         iTreasuries = this.treasuries.stream().map(t -> ITreasury.load(t, web3j, credentials, dynamicGasProvider)).toList();
         this.web3j = web3j;
         this.gasLimit = BigInteger.valueOf(gasLimit);
+        this.bribe = BigInteger.valueOf(bribe);
     }
 
 
@@ -68,8 +72,7 @@ public class Groundskeeper {
         logger.info("updating esteem rate");
 
         try {
-            EthBlock.Block block = web3j.ethGetBlockByNumber(DefaultBlockParameterName.LATEST, false).send().getBlock();
-            BigInteger gasPrice = block.getBaseFeePerGas().multiply(BigInteger.TEN).divide(BigInteger.valueOf(100));
+            BigInteger gasPrice = getGasPrice();
 
             String encodedFunctionCall = iMintRedeemer.updateEsteemRate().encodeFunctionCall();
 
@@ -93,8 +96,7 @@ public class Groundskeeper {
     @Scheduled(cron = "${groundskeeper.allocateSeignorage.cron}")
     public void allocateSeignorage() throws IOException {
 
-        EthBlock.Block block = web3j.ethGetBlockByNumber(DefaultBlockParameterName.LATEST, false).send().getBlock();
-        BigInteger gasPrice = block.getBaseFeePerGas().multiply(BigInteger.TEN).divide(BigInteger.valueOf(100));
+        BigInteger gasPrice = getGasPrice();
 
         iTreasuries.forEach(t -> {
             try {
@@ -116,5 +118,12 @@ public class Groundskeeper {
                 logger.error("error while allocating seignorage", e);
             }
         });
+    }
+
+    @NotNull
+    private BigInteger getGasPrice() throws IOException {
+        EthBlock.Block block = web3j.ethGetBlockByNumber(DefaultBlockParameterName.LATEST, false).send().getBlock();
+        BigInteger gasPrice = block.getBaseFeePerGas().multiply(BigInteger.valueOf(100).add(bribe)).divide(BigInteger.valueOf(100));
+        return gasPrice;
     }
 }
