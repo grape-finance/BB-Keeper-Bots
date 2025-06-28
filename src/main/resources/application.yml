@@ -56,3 +56,11 @@ logging:
     com:
       betterbank: info
 
+
+
+groundskeeper:
+  updateEsteemRate:
+    cron: 0 * * * * *
+  allocateSeignorage:
+    cron: 30 * * * * *
+  gasLimit: 1000000
