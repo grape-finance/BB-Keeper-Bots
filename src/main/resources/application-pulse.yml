@@ -1,9 +1,11 @@
 #  pulsechain-specific configuration file.
+# testnet 943 wss://rpc.v4.testnet.pulsechain.com
+# mainnet 369 wss://rpc-pulsechain.g4mm4.io wss://rpc.pulsechain.com
 
 web3j:
   node:
-    url: wss://rpc-pulsechain.g4mm4.io   # wss://rpc.pulsechain.com
-    chainId: 369
+    url: wss://rpc.v4.testnet.pulsechain.com
+    chainId: 943
     pollingInterval: 2000
     # This has to be a valid key for a valid address for reading.
     # We use a well-known address from the hardhat test environment.
