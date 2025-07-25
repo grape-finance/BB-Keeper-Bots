@@ -23,7 +23,7 @@ logging:
 
 
 groundskeeper:
-  mintRedeemer: "0x551F405f6B133aa2f572f802C1750d5A0B7eF640"
-  treasuries: "0x766Cbe8Bee1a6Bc5b15502fea2011683A402F3eC,0xD04a2a3a8ad2b7b3C38AA82931BBa36f9234CF09,0x0Bc190F650f5e90baA5b719ea337B4931e7781d3"
+  mintRedeemer: "0xfe8f43EceFc0E90EC7cA8b95Cc22Aa716F47B4Ba"
+  treasuries: "0x766Cbe8Bee1a6Bc5b15502fea2011683A402F3eC,0x0Bc190F650f5e90baA5b719ea337B4931e7781d3,0xdD725808BC332d4eB43d6Db89C6A02D7887aECBb"
   # private key for the executor account.  use a low-value key, as this can be compromised.  can be supplied via environment
   executor: "0xc40cd7f910a2a64db0eb01900dc38be1fb2fef256ed573be4eae832b2b1d9281"

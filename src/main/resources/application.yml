@@ -66,4 +66,4 @@ groundskeeper:
   #  gas limit per transaction
   gasLimit: 1000000
   # bribe opver basic gas price in percent
-  bribe: 10
+  bribe: 25
