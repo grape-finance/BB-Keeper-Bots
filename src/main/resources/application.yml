@@ -60,9 +60,9 @@ logging:
 
 groundskeeper:
   updateEsteemRate:
-    cron: 0 * * * * *
+    cron: 0 1 20 * * *
   allocateSeignorage:
-    cron: 30 * * * * *
+    cron: 0 1 * * * *
   #  gas limit per transaction
   gasLimit: 1000000
   # bribe opver basic gas price in percent
